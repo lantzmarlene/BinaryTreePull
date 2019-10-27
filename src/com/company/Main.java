@@ -39,12 +39,19 @@ public class Main {
 
         System.out.println("Ended");
 
-       /* for(int z = 0; z<args.length; z++){
-            System.out.println(args[z]);
-
-            if(args[1].equals(z)){
-                linkedList.get(z);
+        //Get arguments from user... at least I tried... :(
+        if(args.length == 0){
+            System.out.println("No arguments given");
+        }
+        else{
+            for(int z = 0; z<10; z++){
+                System.out.println("Your arguments were: "+args[z]);
+                int x = Integer.parseInt(args[z]);
+                if(x == z){
+                    String a = linkedList.get(z);
+                    System.out.println(z);
+                }
             }
-        }*/
+        }
     }
 }
