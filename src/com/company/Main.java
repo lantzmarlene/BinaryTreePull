@@ -6,52 +6,74 @@ import java.util.Scanner;
 
 public class Main {
 
-    public static void main(String ... args) throws IOException {
+    private static Scanner scan;
+    private static BinaryTree tree;
+    private static LinkedList<String> linkedList;
+    private static PrintWriter writer;
 
-        System.out.println("Starting");
-        File file = new File("C:\\Users\\Marlene\\Workspace\\BinaryTree\\src\\com\\company\\unsorteddict.txt");
-        Scanner scan = new Scanner(file);
+    public static void readFile() throws FileNotFoundException {
+        File file = new File("Resources\\unsorteddict.txt");
+        scan = new Scanner(file);
+    }
 
+    public static void linkedDictionaryCreatorInputer() throws FileNotFoundException, UnsupportedEncodingException {
         //Creation of linked list and line variable
         String fileContents = "";
-        LinkedList<String> linkedList = new LinkedList<>();
-        BinaryTree tree = new BinaryTree();
-        int lineNum = 0;
+        linkedList = new LinkedList<>();
+        tree = new BinaryTree();
 
-        //Writing contents into a file
-        PrintWriter writer = new PrintWriter("C:\\Users\\Marlene\\Workspace\\BinaryTree\\src\\com\\company\\sorteddict.txt", "UTF-8");
-
-        while(scan.hasNextLine()){
+        while(scan.hasNextLine()) {
             fileContents = scan.nextLine();
-            lineNum++;
-            int x = 0;
             if (linkedList.size() == 0) {
                 linkedList.add(0, fileContents);
-            }
-            else {
+            } else {
                 for (int i = 0; i < linkedList.size(); i++) {
                     tree.insert(fileContents);
                 }
             }
         }
-
+    }
+    public static void inOrder() throws FileNotFoundException, UnsupportedEncodingException {
+        writer = new PrintWriter("Resources\\sorteddict.txt", "UTF-8");
         tree.inorderTraversal(writer); //Calls method and writes to a file
+    }
 
-        System.out.println("Ended");
 
-        //Get arguments from user... at least I tried... :(
-        if(args.length == 0){
-            System.out.println("No arguments given");
+    public static void userInput(String[] arguments, BinaryTree tree){
+        if (arguments.length > 10){
+            System.out.println("You may not enter more than 10 arguments at a time.");
         }
         else{
-            for(int z = 0; z<10; z++){
-                System.out.println("Your arguments were: "+args[z]);
-                int x = Integer.parseInt(args[z]);
-                if(x == z){
-                    String a = linkedList.get(z);
-                    System.out.println(z);
-                }
-            }
+
         }
+    }
+
+    public static void main(String ... args) throws IOException {
+        double startTime = System.currentTimeMillis();
+
+        double readFileStartTime = System.currentTimeMillis();
+        readFile();
+        double readFileEndTime = System.currentTimeMillis();
+        double storeContentsStartTime = System.currentTimeMillis();
+        linkedDictionaryCreatorInputer();
+        double storeContentsEndTime = System.currentTimeMillis();
+        double putInOrderAndOutputStartTime = System.currentTimeMillis();
+        inOrder();
+        double putInOrderAndOutputEndTime = System.currentTimeMillis();
+
+        double endTime = System.currentTimeMillis();
+
+        double timeElapsed = endTime - startTime;
+        double timeElapsedReadFile = readFileEndTime - readFileStartTime;
+        double timeElapsedLinkedDictionaryCreator = storeContentsEndTime - storeContentsStartTime;
+        double timeElapsedInOrder = putInOrderAndOutputEndTime - putInOrderAndOutputStartTime;
+
+        System.out.println("Full Programme execution time: " + timeElapsed/1000+ " seconds");
+        System.out.println("Read File Method execution time: " + timeElapsedReadFile/1000+ " seconds");
+        System.out.println("Store Contents from File to put In Order execution time: " + timeElapsedLinkedDictionaryCreator/1000+ " seconds");
+        System.out.println("Put In Order Method and Output to File execution time: " + timeElapsedInOrder/1000+ " seconds");
+
+
+
     }
 }
