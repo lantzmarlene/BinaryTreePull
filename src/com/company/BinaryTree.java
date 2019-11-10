@@ -6,6 +6,8 @@ public class BinaryTree {
 
     // Tree: simplest possible binary search tree
     private Node root; // hidden root node
+    private String word;
+    private BinaryTree left, right;
 
     // insert: if new entry, insert in tree
     public void insert(String word) {
@@ -36,7 +38,7 @@ public class BinaryTree {
     private void inorderT(Node node, PrintWriter writer) {
         if (node != null) {
             inorderT(node.left, writer);
-            System.out.println(node.data+" ");
+            //System.out.println(node.data+" ");
             writer.println(node.data);
             inorderT(node.right, writer);
         }
@@ -56,5 +58,23 @@ public class BinaryTree {
         else
             return(size(node.left) + 1 + size(node.right));
     }
+
+    public boolean containsString(String value) {
+        return contains(root, value);
+    }
+
+    private boolean contains(Node root, String value) {
+        if (root == null) {
+            return false;                               // not in set
+        } else if (root.data.compareTo(value) == 0) {
+            return true;                                // found!
+        } else if (root.data.compareTo(value) > 0) {
+            return contains(root.left, value);          // search left
+        } else {
+            return contains(root.right, value);         // search right
+        }
+    }
+
+
 
 }
